@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>띠띠 ARCHIVE</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #fff;
+    color: #111;
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+}
+
+body {
+    width: 100%;
+}
+
+#archive {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+
+/* =========================
+   포스트
+========================= */
+
+.post {
+    width: 100%;
+    padding: 25px 24px 35px;
+    border-bottom: 1px solid #eeeeee;
+}
+
+
+/* =========================
+   프로필
+========================= */
+
+.post-header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 17px;
+}
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.profile-img {
+    width: 36px;
+    height: 36px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    display: block;
+
+    background: #eee;
+}
+
+.profile-name {
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.fairy {
+    font-size: 17px;
+    line-height: 1;
+}
+
+
+/* =========================
+   사진
+========================= */
+
+.gallery {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    background: #000;
+
+    border-radius: 20px;
+}
+
+.gallery.multi {
+    display: flex;
+
+    overflow-x: auto;
+
+    scroll-snap-type: x mandatory;
+
+    scrollbar-width: none;
+
+    -webkit-overflow-scrolling: touch;
+}
+
+.gallery.multi::-webkit-scrollbar {
+    display: none;
+}
+
+.gallery img {
+    width: 100%;
+    height: 100%;
+
+    flex: 0 0 100%;
+
+    display: block;
+
+    object-fit: contain;
+
+    object-position: center;
+
+    scroll-snap-align: start;
+}
+
+
+/* =========================
+   동그라미
+========================= */
+
+.dots {
+    width: 100%;
+
+    height: 34px;
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 7px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #b5b5b5;
+
+    transition:
+        background 0.15s ease,
+        transform 0.15s ease;
+}
+
+.dot.active {
+    background: #111;
+
+    transform: scale(1.05);
+}
+
+
+/* =========================
+   코멘트
+========================= */
+
+.caption {
+    margin: 7px 2px 0;
+
+    padding: 0;
+
+    font-size: 14px;
+
+    line-height: 1.6;
+
+    font-weight: 400;
+
+    white-space: pre-wrap;
+
+    word-break: keep-all;
+}
+
+
+/* =========================
+   모바일
+========================= */
+
+@media (max-width: 600px) {
+
+    #archive {
+        width: 100%;
+    }
+
+    .post {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .profile-img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .profile-name {
+        font-size: 14px;
+    }
+
+    .fairy {
+        font-size: 17px;
+    }
+
+    .caption {
+        font-size: 14px;
+    }
+}
+
+
+/* =========================
+   큰 화면
+========================= */
+
+@media (min-width: 601px) {
+
+    body {
+        background: #f3f3f3;
+    }
+
+    #archive {
+        background: #fff;
+        min-height: 100vh;
+    }
+}
+</style>
+</head>
+
+
+<body>
+
+<main id="archive"></main>
+
+
+<script>
+
+/* =====================================================
+   프로필
+===================================================== */
+
+const profileImage =
+"f78b1e61dc1b88f1e52c14b7c0cc4e5323f34f51.jpeg";
+
+
+/* =====================================================
+   포스트
+===================================================== */
+
+const posts = [
+
+    [1, "키씨~~난 띠얌!! 우리 앞으로 여기서 소통 많이해용🖤 우리 공식 홈페이지 생겨서 넘 행복!!✨"],
+
+    [1, "키씨들~~💋행복한 추석연휴 보내고 있나용~?? 가족 그리고 사랑하는 사람들과 함께 좋은 시간 보내고 맛있는 거 먹고 힐링도 하고 와용🤍 다들 우리 포스터 봤죠??? 우리는 지금 컴백 열심히 준비하고 있으니 조금만 기다려요!! 이번엔 무대 다 찢어버릴 예정!!🔥😎"],
+
+    [3, "행복했다🤍 우리 멤버들과 첫 태국 ✨"],
+
+    [1, "옥수수 수염차입니다^^ㅎㅎㅎ 키씨!!!💋 드디어 우리 컴백도 하고! 어제 첫 음악방송도 했잖아요!! 진짜 진짜 이번 활동도 멋있게 찢고 우리키씨의 어깨 더 올라가게 해줄테니! 우리 함께 이번 건강하게 활동해요❤️‍🔥❤️‍🔥 요즘 날씨도 추워졌는데 감기 조심하고 아프지말기!! ✨"],
+
+    [3, "🪞🤳✨"],
+
+    [2, "To: Kissy💋 키씨들 안녕~~~ 이번 활동도 끝냈고 어제 드디어 우리가 진짜 열심히 준비한 MMA 무대까지도 잘 마무리했어!! 10년동안 연습생 생활하면서 내 노래로 이런 큰 시상식 무대 쓰는게 나의 큰 꿈였는데ㅠ 그 꿈을 이룰 수 있게 만들어줘서 너무 고마워 덕분에 내 꿈 하나가 이룬거야!! 어제 우리 멤버들도 너무 행복해했고 부모님들도 너무 자랑스러워해 하셨어ㅠㅠ 앞으로 남은 우리의 시상식무대도 많이 기대해줘! 우리 키오프가 어제 무대로 몸 풀었다면 다음 무대들은다 뿌실 준비가 됐으니까 더 더 멋질 예정!!! 🔥🔥🔥\n\n(사진은 내 10년째 친구 요새 핫한 배우 신은수라고 해!! 티엠아이이지만 우리는 연습생 같이 시작했고 각자 맞는길을 찾아 각자자리에서 정말 오랫동안 노력을 했는데 이제 그동안 노력해왔던게 조금씩 빛을 바라보고 있고 어느덧보니 다른 분야에서 같은 무대에 쓰게 되었엏ㅎㅎ 너무 신기하고 우리둘다 열심히 살아왔구나 한번 더 생각이 들었어!! 귀여운 우리 사진와 우리 추억들도 키씨랑 공유하고싶었엉❤️)"],
+
+    [2, "포토이즘 비하인드 사진!! 키씨가 보고싶은 밤🌙✨"],
+
+    [1, "키씨!!💋 잘 지내고 있엉??!! 2024 새해에 첫 글이네~~!! 작년에 키씨 덕분에 행복하고 선물 같은 한 해 였어!! 이번 새해에 태국 가서 새해맞이 서가대 시상식도 하고 왔는데 키씨들 너무 좋아해주고 잘했다고 해주니까 행복했어~ 남은 시상식들도 열심히 준비하고 있는데 많이 기대해줘 아주 멋있을 예정이양❤ 항상 내 옆에서 언제나 응원해주고 모든 모습 사랑해줘서 고마워 나도 사랑해✨💕"],
+
+    [3, "Kissy~💋 요새 잘 지내고 있어요~?! 띠로그 , 키오프 라이브클립 등우리 영상이 많이 나왔잖아요! 나는 댓글보면서 힐링도 하고! 힘도 얻고 더 열심히 하루하루를 보내려고 하고있어요!! 키씨가 나한테 좋은에너지를 얻는다고 항상 얘기해줬었는데 그 만큼 나도 사실 키씨가 해주는 예쁜 말 하나하나 때문에 힘이 나요💕 꼭 얘기 해주고 싶어서 또이렇게 찾아왔어요!! 오늘도 맛있는 거 챙겨 먹고!! 띠 생각하면서 오늘하루도 화이팅이에요!! 👍🏻"],
+
+    [2, "키씨가 보고싶을때 어떻게 해야할까??!!😂💖"],
+
+    [2, "Kissy💋✨ 어제 드디어 우리 뮤비가 공개 되고 쇼케이스도 하고 첫싱글이 발매 됐잖아~ 다들 좋아해주니 나도 너무 행복하당💕 오늘부터 음방이 시작되는데 키씨 자주 볼 생각에 신나!! 나 응원하러 올거지?? 우리 이번달도 알차게 함께 보내자! 컴백 준비하면서 힘들거나 키씨가 보고싶을때 비스테이지 틈틈히 들어와서 편지도 읽고 했는데 덕분에 항상 힘을 얻고 있엉!! 오래만에 나도 내 맘 전하고 싶어서 왔어❤️ 이번 활동 뿌시자 러뷰"],
+
+    [3, "오노추 해줘~~ 나랑 잘 어울릴 것 같은 노래!! 🎶"],
+
+    [2, "🦁🦁 사자띠 보고싶은 사람~?? 오랜만에 사진 보다가 금발띠가 나와서 미공 사진 풀고갑니다아앙 오늘도 좋은 하루보내자ㅏ🤍🤍"],
+
+    [1, "To : kissy🦋 빨리 키씨 또 만나고 싶다아❤️❤️ 봐도 또 보고싶고!! 빨리 우리 팬콘도 왔음 좋겠고 컴백도 ???도 ㅎㅎㅎ 왔으면 좋겠다!! 열심히 다양한것들 준비하고 있으니까 키씨 항상 대기하고 있엉!! 언제 뭐가 나올지 모를거양!!! 오늘도 고생했고 좋은 밤 보내!! 사랑해💋"],
+
+    [2, "Kissy💋💋 드디어 우리 내일이 팬콘이네요~!!🫣✨ 우리 키오프의 첫 팬콘인 만큼 진짜 다양한 무대들 열심히 준비를 했는데 우리 키씨가 함께 재밌게 놀고 가면 좋겠고 진짜 새로운 무대들 많이 준비했는데 그것도 좋아해줬음 좋겠어요!! 준비 됐죠??!! 준비 됐으면 소리 질러어어어어🔥🔥🔥🔥 다들 오늘 좋은 하루보내고 내일봐요🥰🥰 드레스코드는 : 화이트🤍 아니면 핑크💖 포인트 주기!!"],
+
+    [2, "키씨~~~ 오늘 덕분에 제일 많이 축하 받고 너무 소중하고 행복한 생일을 보냈어요!!!❤️🎂 고맙고 또 고마워요!! 오늘 아침부터 너무 떨리고 긴장한 사녹에 키씨들이 와서 응원해주니까 더 잘 할 수 있었고!! 띠 생일이라고 얘기해줘서 재범선배님도 재범선배님의 팬분들까지 띠 생일 축하해주고!!!🫣🫣 나의 소중한 날 함께 해서 좋았어요!! 택시불러 무대 사실 띠한테선물 같은 무대이기도하고 준비하면서 내 생일에 키씨들한테 준 선물이기도하니까 좋아해줬음 좋겠고 생일 라이브 그리고 축제까지 축하많이 해줘서 고마워여옹"],
+
+    [2, "Kissy😎😎😎😎 드디어!!!!! 우리 컴백하고 오늘 첫방까지 마무리했는데 다들 어때요??!!! 띠는 이번 활동이 벌써 재밌고 너무 기대가돼!!! 이렇게 웃으면 즐기는 컴백 무대가 처음이에요!! ❤️ 우리 이번 활동더더 핫하게 썸머를 보내자🔥 알러뷰"],
+
+    [5, "Kissyy❤️❤️❤️ 우리 오늘 막방이네 ㅠㅠ 이번 활동도 너무너무 모두 다 고생 많았어!!!🦋 키씨들 그리고 너무 많은 대중분들 이번 활동 많이 좋아해주고 관심가져주고 우리 키오프를 알리게 된 첫 여름 활동이였던 것 같아!!🥹 정말 많은 준비도 했고 1년밖에 안된 신인인 우리가 이렇게 빠르게 4번째 컴백 할 수 있었던 것도 다 키씨덕분이야! 이번 활동에 첫 1위도 해보고.. 음원 사이트 top5까지.. 아직 많이 부족한 키오프지만항상 우리의 가능성을 믿어주고 옆에서 예쁜 말도 많이 해주고 자신감을 주고 응원해줘서 정말정말로 고마워!! 이번 활동 통해 많은 것도 배웠고 좋은 경험들도 덕분에 많이 했어!! 3주동안 우리 사녹 보러와준키씨들도 너무 고마워 거의 우리처럼 잠도 못자고 했을텐데 고생많았어!! 남은 워터밤 시상식 그리고….까지 아직 많이 남았으니! 우리 올해도 즐겨보자고❤️ 정말로 많이 사랑하고 아껴!!!"],
+
+    [1, "띠 첫 지면 화보 데이즈드 사진 본 사람~?! 내가 너무 좋아하는 패션쪽에도 조금씩 열심히 노력하고있다궁 앞으로도 더 다양한 도전하고 다양한 모습 보여줄겡 키씨들은 오늘 하루 잘보내고 있낭~?❤️ 오늘도 많이 보고싶엉"],
+
+    [2, "키씨💋💋💋 잘 지내고 있나앙~~~??! 블랙스완 보고싶은 사람??!!"],
+
+    [3, "미공개 금발👱‍♀️👱‍♀️"],
+
+    [2, "자ㅏ 선물!!!"],
+
+    [3, "단발띠 안뇽~~~"],
+
+    [2, "키씨ㅣ 💋💋 우리 첫 한국콘 끝나고 미주콘 내일 부터 시작인데ㅔ 갑자기 너무 떨리고 설렌다ㅏㅠㅠㅠ 그래도 한국에서 첫콘 한번했다고 그래도 좀 재밌게 즐길 수 있을 것 같앙 너무 행복했엉💖 우리 한달동안 열심히 재밌게 무대하고 올거니까 보고싶겠지만 우리 무대 영상도 챙겨보고 띠집도 챙겨보고 앞으로 나올 컨텐츠들 보고 우리 많이 보고싶어해줘🐱🖤 건강하게 잘지낼게 걱정말고 키씨도 감기 조심하고!! 잘 있깅"],
+
+    [2, "뭐해~~??"],
+
+    [1, "띠모닝~~~🥰 오늘 하루도 화이팅>< 많이 웃자앙 ㅎㅎ"],
+
+    [4, "묶띠 or 풀띠"],
+
+    [3, "키씨가 립힙키 이 착장을 되게 좋아하더라~???😉"],
+
+    [2, "Miss u...❣️"],
+
+    [2, "띠 셀카 좀 늘었나~??😉"],
+
+    [2, "나 안 보고싶어???🫣"],
+
+    [2, "4월까지 어떻게 기다립니까?!!?🫣🫣🫣"]
+
+];
+
+
+/* =====================================================
+   사진 번호
+===================================================== */
+
+const imageNumbers = [];
+
+for (let i = 7619; i <= 7684; i++) {
+    imageNumbers.push(i);
+}
+
+
+/* =====================================================
+   사이트 생성
+===================================================== */
+
+const archive =
+    document.getElementById("archive");
+
+let imageIndex = 0;
+
+
+posts.forEach((post) => {
+
+    const count = post[0];
+
+    const caption = post[1];
+
+
+    /* 포스트 */
+
+    const article =
+        document.createElement("article");
+
+    article.className = "post";
+
+
+    /* =========================
+       프로필
+    ========================= */
+
+    const header =
+        document.createElement("div");
+
+    header.className = "post-header";
+
+
+    const profile =
+        document.createElement("div");
+
+    profile.className = "profile";
+
+
+    const profileImg =
+        document.createElement("img");
+
+    profileImg.className =
+        "profile-img";
+
+    profileImg.src =
+        profileImage;
+
+    profileImg.alt =
+        "띠띠";
+
+
+    const name =
+        document.createElement("span");
+
+    name.className =
+        "profile-name";
+
+    name.textContent =
+        "띠띠";
+
+
+    const fairy =
+        document.createElement("span");
+
+    fairy.className =
+        "fairy";
+
+    fairy.textContent =
+        "🦋";
+
+
+    profile.appendChild(profileImg);
+
+    profile.appendChild(name);
+
+    profile.appendChild(fairy);
+
+    header.appendChild(profile);
+
+    article.appendChild(header);
+
+
+    /* =========================
+       사진
+    ========================= */
+
+    const gallery =
+        document.createElement("div");
+
+    gallery.className =
+        count > 1
+        ? "gallery multi"
+        : "gallery";
+
+
+    const usedImages = [];
+
+
+    for (let i = 0; i < count; i++) {
+
+        const number =
+            imageNumbers[imageIndex];
+
+
+        if (number === undefined) {
+            break;
+        }
+
+
+        usedImages.push(number);
+
+
+        const img =
+            document.createElement("img");
+
+
+        img.src =
+            `IMG_${number}.jpeg`;
+
+
+        img.alt =
+            `IMG_${number}`;
+
+
+        img.loading =
+            "lazy";
+
+
+        gallery.appendChild(img);
+
+
+        imageIndex++;
+    }
+
+
+    /* 사진이 하나라도 있을 때만 표시 */
+
+    if (usedImages.length > 0) {
+
+        article.appendChild(gallery);
+
+
+        /* =========================
+           동그라미
+        ========================= */
+
+        if (usedImages.length > 1) {
+
+            const dots =
+                document.createElement("div");
+
+            dots.className =
+                "dots";
+
+
+            usedImages.forEach((number, index) => {
+
+                const dot =
+                    document.createElement("span");
+
+                dot.className =
+                    index === 0
+                    ? "dot active"
+                    : "dot";
+
+
+                dots.appendChild(dot);
+
+            });
+
+
+            article.appendChild(dots);
+
+
+            /* 사진을 넘기면
+               동그라미도 같이 변경 */
+
+            gallery.addEventListener(
+                "scroll",
+                () => {
+
+                    const width =
+                        gallery.clientWidth;
+
+
+                    if (!width) {
+                        return;
+                    }
+
+
+                    const currentIndex =
+                        Math.round(
+                            gallery.scrollLeft /
+                            width
+                        );
+
+
+                    const allDots =
+                        dots.querySelectorAll(
+                            ".dot"
+                        );
+
+
+                    allDots.forEach(
+                        (dot, index) => {
+
+                            dot.classList.toggle(
+                                "active",
+                                index === currentIndex
+                            );
+
+                        }
+                    );
+
+                }
+            );
+
+        }
+
+    }
+
+
+    /* =========================
+       코멘트
+    ========================= */
+
+    if (caption.trim() !== "") {
+
+        const text =
+            document.createElement("p");
+
+        text.className =
+            "caption";
+
+        text.textContent =
+            caption;
+
+
+        article.appendChild(text);
+
+    }
+
+
+    archive.appendChild(article);
+
+});
+
+</script>
+
+</body>
+</html>
