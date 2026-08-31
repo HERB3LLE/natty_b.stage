@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KISS OF LIFE ARCHIVE</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+
+    width: 100%;
+    min-height: 100%;
+
+    background: #fff;
+    color: #111;
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Helvetica Neue",
+        Arial,
+        sans-serif;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.home {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100vh;
+
+    padding: 40px 24px;
+}
+
+
+/* =========================
+   TITLE
+========================= */
+
+.title {
+    margin-bottom: 32px;
+
+    font-size: 20px;
+    font-weight: 700;
+
+    letter-spacing: -0.5px;
+}
+
+
+/* =========================
+   MEMBERS
+========================= */
+
+.members {
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   MEMBER
+========================= */
+
+.member {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    padding: 15px 0;
+
+    text-decoration: none;
+    color: #111;
+
+    border-bottom: 1px solid #eeeeee;
+}
+
+.member:first-child {
+    border-top: 1px solid #eeeeee;
+}
+
+
+/* =========================
+   PROFILE
+========================= */
+
+.profile {
+    width: 52px;
+    height: 52px;
+
+    margin-right: 14px;
+
+    border-radius: 50%;
+
+    object-fit: cover;
+
+    background: #eeeeee;
+
+    flex-shrink: 0;
+}
+
+
+/* =========================
+   NAME
+========================= */
+
+.name {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+
+/* =========================
+   COMING SOON
+========================= */
+
+.disabled {
+    cursor: default;
+}
+
+.disabled .name {
+    color: #999;
+}
+
+.status {
+    margin-left: auto;
+
+    font-size: 10px;
+
+    color: #aaa;
+}
+
+
+/* =========================
+   CLICK
+========================= */
+
+.member[href]:active {
+    opacity: 0.55;
+}
+
+</style>
+</head>
+
+
+<body>
+
+<div class="home">
+
+
+    <!-- =====================
+         TITLE
+    ====================== -->
+
+    <div class="title">
+        KISS OF LIFE
+    </div>
+
+
+    <!-- =====================
+         MEMBERS
+    ====================== -->
+
+    <div class="members">
+
+
+        <!-- =====================
+             JULIE
+        ====================== -->
+
+        <div class="member disabled">
+
+            <div class="profile"></div>
+
+            <div class="name">
+                Julie
+            </div>
+
+            <div class="status">
+                coming soon
+            </div>
+
+        </div>
+
+
+        <!-- =====================
+             NATTY
+        ====================== -->
+
+        <a
+            class="member"
+            href="https://nattybstage.vercel.app"
+        >
+
+            <img
+                class="profile"
+                src="Untitled45_20260901011929.png"
+                alt="Natty"
+            >
+
+            <div class="name">
+                Natty
+            </div>
+
+        </a>
+
+
+        <!-- =====================
+             BELLE
+        ====================== -->
+
+        <a
+            class="member"
+            href="https://belle-bstage.vercel.app"
+        >
+
+            <img
+                class="profile"
+                src="Untitled45_20260901012016.png"
+                alt="Belle"
+            >
+
+            <div class="name">
+                Belle
+            </div>
+
+        </a>
+
+
+        <!-- =====================
+             HANEUL
+        ====================== -->
+
+        <div class="member disabled">
+
+            <div class="profile"></div>
+
+            <div class="name">
+                Haneul
+            </div>
+
+            <div class="status">
+                coming soon
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+</body>
+</html>
